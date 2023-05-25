@@ -1,20 +1,32 @@
+import { classNames } from "../utilities/helpers";
+
 export type Info = {
   title: string;
   value: number;
 };
 interface Props {
   infos: Info[];
+  isOrange: boolean;
 }
-const InfoCards: React.FC<Props> = ({ infos }) => {
+const InfoCards: React.FC<Props> = ({ infos, isOrange }) => {
   const cards = (title: string, value: number) => {
     return (
       <div
         key={title}
-        className='px-3 py-2 rounded-md border border-gray-100 shadow-md justify-start flex-row bg-zinc-100'>
-        <span className='block text-sm text-zinc-500 font-bold text-center'>
+        className={classNames(
+          "px-3 py-2 rounded-md  justify-start flex-row",
+          isOrange
+            ? "bg-orange-50"
+            : "bg-white border border-gray-500 border-dashed"
+        )}>
+        <span className='block text-sm text-gray-800 font-bold text-center'>
           {title}
         </span>
-        <span className='block text-base text-zinc-600 font-semibold mt-2 text-center'>
+        <span
+          className={classNames(
+            `block text-base font-semibold mt-2 text-center`,
+            isOrange ? "text-red-500" : "text-gray-700"
+          )}>
           {value.toFixed(2)}
         </span>
       </div>

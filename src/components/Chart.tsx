@@ -18,10 +18,10 @@ const PieChart: React.FC<Props> = ({ data = [] }) => {
           label: "(%)",
           data: [...data],
           backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
+            "rgba(251, 146, 60, 0.2)",
+            "rgba(251, 113, 133, 0.2)",
           ],
-          borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+          borderColor: ["rgba(251, 146, 60, 1)", "rgba(190, 18, 60, 1)"],
           borderWidth: 1,
         },
       ],
