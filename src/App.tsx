@@ -1,9 +1,14 @@
+import { useState } from "react";
+import PieChart from "./components/Chart";
 import InfoCards from "./components/InfoCard";
+import Modal from "./components/Modal";
 import RadioGroupComponent, { Option } from "./components/RadioGroup";
 import useEMICalculator from "./hoooks/useEMICalculator";
+import { classNames } from "./utilities/helpers";
 
 const App = () => {
   const {
+    principal,
     setPrincipal,
     setInterestRate,
     setTenure,
@@ -13,6 +18,8 @@ const App = () => {
     calculateEMI,
     results,
   } = useEMICalculator();
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const radioOptions: Option[] = [
     {
@@ -35,11 +42,24 @@ const App = () => {
   const handleSubmit = () => {
     calculateEMI();
   };
+
+  const getDataForChart = () => {
+    if (results.length < 3) return [];
+    const primaryPer: number = Number(
+      ((principal / results[2].value) * 100).toFixed(2)
+    );
+    const interestPer: number = Number(
+      ((results[1].value / results[2].value) * 100).toFixed(2)
+    );
+    if (!isNaN(primaryPer) && !isNaN(interestPer))
+      return [primaryPer, interestPer];
+    else return [];
+  };
   return (
     <>
-      <div className='flex justify-center items-center h-screen'>
-        <div className='bg-white rounded-lg shadow-lg p-6  border border-zinc-100 md:w-2/4 sm:w-11/12'>
-          <h2 className='text-2xl text-center mb-4'>Emi Calculator</h2>
+      <div className='flex justify-center items-center h-screen overflow-y-auto'>
+        <div className='bg-white rounded-lg shadow-lg p-6  border border-zinc-100  md:w-2/4 sm:w-11/12'>
+          <h2 className='text-2xl text-center mb-4'>EMI Calculator</h2>
           <div className='mb-4'>
             <label className='block mb-2 text-gray-700'>Primary Amount</label>
             <input
@@ -68,7 +88,7 @@ const App = () => {
               }
             />
           </div>
-          <div className='mb-4 items-center justify-center sm:flex-row md:flex'>
+          <div className='mb-4 items-center justify-center max-sm:flex-row md:flex'>
             <div className='w-full'>
               <label className='block mb-2 text-gray-700'>
                 Tenure (in {isMonthly ? "months" : "years"}):
@@ -94,11 +114,21 @@ const App = () => {
               />
             </div>
           </div>
-          <button
-            className='bg-blue-500 text-white px-4 py-2 rounded-md'
-            onClick={() => handleSubmit()}>
-            Calculate
-          </button>
+          <div className='grid md:grid-cols-2 grid-rows-none gap-3 max-sm:grid-rows-2 grid-cols-none gap-y-2'>
+            <button
+              className='bg-blue-500 text-white px-4 py-2 rounded-md sm:w-full'
+              onClick={() => handleSubmit()}>
+              Calculate
+            </button>
+            <button
+              className={classNames(
+                "bg-sky-500 text-white px-4 py-2 rounded-md sm:w-full",
+                !!emi && emi > 0 ? "block" : "hidden"
+              )}
+              onClick={() => setOpen(true)}>
+              Show Graph
+            </button>
+          </div>
           <br />
           <div className='hidden bg-white rounded-lg shadow-lg p-6 w-full mt-5 border border-separate border-stone-700'>
             <div className='flex items-center justify-center'>
@@ -107,11 +137,15 @@ const App = () => {
               </span>
             </div>
           </div>
-          <div className='mt-4'>
-            <InfoCards infos={results} />
-          </div>
+          <InfoCards infos={results} />
         </div>
       </div>
+      <Modal open={open} setOpen={setOpen}>
+        <div className='mt-2 max-sm:mb-3 md:mb-5'>
+          <InfoCards infos={results} />
+        </div>
+        <PieChart data={getDataForChart()} />
+      </Modal>
     </>
   );
 };

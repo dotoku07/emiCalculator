@@ -22,7 +22,7 @@ const InfoCards: React.FC<Props> = ({ infos }) => {
   };
   return (
     <div className='w-full'>
-      <div className='grid  md:grid-cols-3 gap-3 sm:grid-rows-3 gap-y-3'>
+      <div className='grid  md:grid-cols-3 grid-rows-none gap-3 max-sm:grid-rows-3 grid-cols-none gap-y-3'>
         {infos.map((data) => {
           return cards(data.title, data.value);
         })}
