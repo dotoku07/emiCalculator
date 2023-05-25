@@ -38,7 +38,7 @@ const App = () => {
   return (
     <>
       <div className='flex justify-center items-center h-screen'>
-        <div className='bg-white rounded-lg shadow-lg p-6 w-2/4 border border-zinc-100'>
+        <div className='bg-white rounded-lg shadow-lg p-6  border border-zinc-100 md:w-2/4 sm:w-11/12'>
           <h2 className='text-2xl text-center mb-4'>Emi Calculator</h2>
           <div className='mb-4'>
             <label className='block mb-2 text-gray-700'>Primary Amount</label>
@@ -68,7 +68,7 @@ const App = () => {
               }
             />
           </div>
-          <div className='mb-4 flex items-center justify-center'>
+          <div className='mb-4 items-center justify-center sm:flex-row md:flex'>
             <div className='w-full'>
               <label className='block mb-2 text-gray-700'>
                 Tenure (in {isMonthly ? "months" : "years"}):
@@ -85,7 +85,7 @@ const App = () => {
                 }
               />
             </div>
-            <div className='w-full ml-2'>
+            <div className='w-full md:ml-2'>
               <RadioGroupComponent
                 onChange={handleOptionChange}
                 options={radioOptions}
