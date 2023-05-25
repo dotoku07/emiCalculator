@@ -137,12 +137,12 @@ const App = () => {
               </span>
             </div>
           </div>
-          <InfoCards infos={results} />
+          <InfoCards isOrange={false} infos={results} />
         </div>
       </div>
       <Modal open={open} setOpen={setOpen}>
         <div className='mt-2 max-sm:mb-3 md:mb-5'>
-          <InfoCards infos={results} />
+          <InfoCards isOrange={true} infos={results} />
         </div>
         <PieChart data={getDataForChart()} />
       </Modal>
