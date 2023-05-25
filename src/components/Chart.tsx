@@ -15,7 +15,7 @@ const PieChart: React.FC<Props> = ({ data = [] }) => {
       labels: ["Primary", "Interest"],
       datasets: [
         {
-          label: "# of Votes",
+          label: "(%): ",
           data: [...data],
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
